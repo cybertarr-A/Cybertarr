@@ -28,3 +28,15 @@ Disadvantages:
 * Slower initial progress.
 * Requires extensive experimentation.
 * Higher architectural complexity.
+
+## Update
+
+Decision:
+
+The embryo will never create observations.
+
+All observations originate from an external world.
+
+Reason:
+
+This separates cognition from the environment and allows multiple worlds to be connected without modifying the brain.

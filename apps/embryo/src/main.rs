@@ -1,14 +1,20 @@
 mod brain;
 mod heartbeat;
+mod observation;
 mod state;
+mod world;
 
 use brain::Brain;
 use std::{thread, time::Duration};
 
 fn main() {
-    let mut embryo = Brain::new();
+    println!("=================================");
+    println!("Cybertarr");
+    println!("Digital Embryo");
+    println!("Version 0.0.1-alpha");
+    println!("=================================\n");
 
-    println!("Cybertarr Embryo v0.0.1");
+    let mut embryo = Brain::new();
 
     loop {
         embryo.tick();

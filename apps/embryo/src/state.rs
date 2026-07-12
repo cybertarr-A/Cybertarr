@@ -13,7 +13,6 @@ impl Default for InternalState {
         Self {
             alive: true,
             age_ticks: 0,
-
             energy: 1.0,
             curiosity: 1.0,
             uncertainty: 1.0,

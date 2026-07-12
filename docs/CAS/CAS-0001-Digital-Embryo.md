@@ -38,3 +38,27 @@ Its only purpose is to exist, evolve, and eventually learn.
 ## Success Criteria
 
 The embryo maintains a stable heartbeat and internal state across continuous execution.
+
+## Current Architecture
+
+World
+
+↓
+
+Observation
+
+↓
+
+Brain
+
+↓
+
+Internal State
+
+## Implemented Components
+
+- Heartbeat
+- World
+- Observation
+- Brain
+- Internal State
