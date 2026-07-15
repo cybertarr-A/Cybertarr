@@ -5,9 +5,12 @@ use crate::physiology::Physiology;
 use crate::state::InternalState;
 use crate::world::World;
 
+use memory::Memory;
+
 pub struct Brain {
     pub state: InternalState,
     pub world: World,
+    pub memory: Memory,
     pub logger: Logger,
 }
 
@@ -16,6 +19,7 @@ impl Brain {
         Self {
             state: InternalState::default(),
             world: World::new(),
+            memory: Memory::new(64),
             logger: Logger::new(),
         }
     }
@@ -26,6 +30,16 @@ impl Brain {
 
         // Observe the world
         let observation = self.world.observe();
+
+        // Store observation in memory
+        //
+        // NOTE:
+        // We temporarily convert the observation to a string.
+        // Later we'll replace this with a proper Observation type.
+        let _ = self.memory.observe(
+            format!("{:?}", observation),
+            self.state.age_ticks,
+        );
 
         // Physiological response
         Physiology::process(
@@ -44,30 +58,36 @@ impl Brain {
             &self.state,
         );
 
-        // Save the current log
-        // (Temporary: we'll optimize this later)
         self.logger.save();
 
-        println!("\n==============================");
-        println!("❤️ Heartbeat {}", self.state.age_ticks);
+        let stats = self.memory.statistics();
 
-        println!("\n👁 Observation");
+        println!("\n==============================");
+        println!("Heartbeat {}", self.state.age_ticks);
+
+        println!("\nObservation");
         println!("{:#?}", observation);
 
-        println!("\n🫀 Homeostasis Updated");
+        println!("\nMemory");
+        println!("Unique Memories   : {}", stats.total_memories);
+        println!("Observations      : {}", stats.total_observations);
+        println!("Average Novelty   : {:.3}", stats.average_novelty);
+        println!(
+            "Most Seen         : {:?}",
+            stats.most_seen_observation
+        );
 
-        println!("\n🧠 Internal State");
+        println!("\nInternal State");
         println!("{:#?}", self.state);
 
         println!("==============================");
 
         if !self.state.alive {
-            println!("\n💀 Embryo has died.");
+            println!("\nEmbryo has died.");
 
-            // Final save before exit
             self.logger.save();
-            
-            println!("💾 Experiment saved.");
+
+            println!("Experiment saved.");
 
             std::process::exit(0);
         }

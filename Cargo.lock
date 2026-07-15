@@ -70,6 +70,7 @@ name = "embryo"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "memory",
  "serde",
  "serde_json",
  "uuid",
