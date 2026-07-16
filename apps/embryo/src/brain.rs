@@ -36,9 +36,9 @@ impl Brain {
         // NOTE:
         // We temporarily convert the observation to a string.
         // Later we'll replace this with a proper Observation type.
-        let _ = self.memory.observe(
-            format!("{:?}", observation),
-            self.state.age_ticks,
+      let _ = self.memory.observe(
+        observation.value.clone(),
+        self.state.age_ticks,
         );
 
         // Physiological response
