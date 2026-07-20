@@ -12,6 +12,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "attention"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "autocfg"
 version = "1.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -69,6 +76,7 @@ checksum = "56254986775e3233ffa9c4d7d3faaf6d36a2c09d30b20687e9f88bc8bafc16c8"
 name = "embryo"
 version = "0.1.0"
 dependencies = [
+ "attention",
  "chrono",
  "memory",
  "serde",

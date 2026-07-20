@@ -5,6 +5,7 @@ use crate::physiology::Physiology;
 use crate::state::InternalState;
 use crate::world::World;
 
+use attention::{AttentionConfig, AttentionEngine};
 use memory::Memory;
 
 pub struct Brain {
@@ -12,6 +13,7 @@ pub struct Brain {
     pub world: World,
     pub memory: Memory,
     pub logger: Logger,
+    pub attention: AttentionEngine,
 }
 
 impl Brain {
@@ -21,6 +23,11 @@ impl Brain {
             world: World::new(),
             memory: Memory::new(64),
             logger: Logger::new(),
+
+            // Initialize the attention engine
+            attention: AttentionEngine::new(
+                AttentionConfig::default(),
+            ),
         }
     }
 
@@ -28,18 +35,27 @@ impl Brain {
         // Advance the organism
         heartbeat(&mut self.state);
 
-        // Observe the world
+        // Observe the environment
         let observation = self.world.observe();
 
-        // Store observation in memory
-        //
-        // NOTE:
-        // We temporarily convert the observation to a string.
-        // Later we'll replace this with a proper Observation type.
-      let _ = self.memory.observe(
-        observation.value.clone(),
-        self.state.age_ticks,
+        // ----------------------------------------------------
+        // Temporary attention evaluation.
+        // These values are placeholders and will later be
+        // computed from the Observation.
+        // ----------------------------------------------------
+        let attention_result = self.attention.process(
+            0.8, // novelty
+            0.6, // importance
+            0.5, // urgency
         );
+
+        // Store only observations that passed attention.
+        if attention_result.accepted {
+            let _ = self.memory.observe(
+                observation.value.clone(),
+                self.state.age_ticks,
+            );
+        }
 
         // Physiological response
         Physiology::process(
@@ -52,9 +68,10 @@ impl Brain {
             &mut self.state,
         );
 
-        // Record this tick
+        // Log the tick
         self.logger.record(
             &observation,
+            &attention_result,
             &self.state,
         );
 
@@ -67,6 +84,9 @@ impl Brain {
 
         println!("\nObservation");
         println!("{:#?}", observation);
+
+        println!("\nAttention");
+        println!("{:#?}", attention_result);
 
         println!("\nMemory");
         println!("Unique Memories   : {}", stats.total_memories);

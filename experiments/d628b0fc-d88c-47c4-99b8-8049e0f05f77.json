@@ -1,0 +1,668 @@
+{
+  "run_id": "d628b0fc-d88c-47c4-99b8-8049e0f05f77",
+  "started_at": "2026-07-20T23:16:07.511359709+05:30",
+  "ended_at": "2026-07-20T23:16:42.547568421+05:30",
+  "version": "0.0.1-alpha",
+  "total_ticks": 36,
+  "survived": true,
+  "final_state": {
+    "alive": true,
+    "age_ticks": 36,
+    "energy": 0.8920007,
+    "curiosity": 1.3599997,
+    "uncertainty": 1.1199999,
+    "fatigue": 0.07199999,
+    "stress": 0.060499415,
+    "health": 0.9989114
+  },
+  "ticks": [
+    {
+      "tick": 1,
+      "observation": {
+        "tick": 1,
+        "source": "World",
+        "value": "Dark"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 1,
+        "energy": 0.999,
+        "curiosity": 0.99,
+        "uncertainty": 1.03,
+        "fatigue": 0.002,
+        "stress": 0.0015290001,
+        "health": 0.99999845
+      }
+    },
+    {
+      "tick": 2,
+      "observation": {
+        "tick": 2,
+        "source": "World",
+        "value": "Sound"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 2,
+        "energy": 0.998,
+        "curiosity": 0.99,
+        "uncertainty": 1.05,
+        "fatigue": 0.004,
+        "stress": 0.0030743552,
+        "health": 0.99999535
+      }
+    },
+    {
+      "tick": 3,
+      "observation": {
+        "tick": 3,
+        "source": "World",
+        "value": "Movement"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 3,
+        "energy": 0.99500006,
+        "curiosity": 1.04,
+        "uncertainty": 1.05,
+        "fatigue": 0.006,
+        "stress": 0.004644983,
+        "health": 0.9999907
+      }
+    },
+    {
+      "tick": 4,
+      "observation": {
+        "tick": 4,
+        "source": "World",
+        "value": "Temperature"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 4,
+        "energy": 0.9840001,
+        "curiosity": 1.04,
+        "uncertainty": 1.05,
+        "fatigue": 0.008,
+        "stress": 0.006231758,
+        "health": 0.99998444
+      }
+    },
+    {
+      "tick": 5,
+      "observation": {
+        "tick": 5,
+        "source": "World",
+        "value": "Silence"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 5,
+        "energy": 0.9830001,
+        "curiosity": 1.04,
+        "uncertainty": 1.03,
+        "fatigue": 0.010000001,
+        "stress": 0.0077945986,
+        "health": 0.99997663
+      }
+    },
+    {
+      "tick": 6,
+      "observation": {
+        "tick": 6,
+        "source": "World",
+        "value": "Light"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 6,
+        "energy": 0.9820001,
+        "curiosity": 1.06,
+        "uncertainty": 1.02,
+        "fatigue": 0.012000001,
+        "stress": 0.009353626,
+        "health": 0.9999673
+      }
+    },
+    {
+      "tick": 7,
+      "observation": {
+        "tick": 7,
+        "source": "World",
+        "value": "Dark"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 7,
+        "energy": 0.9810001,
+        "curiosity": 1.05,
+        "uncertainty": 1.05,
+        "fatigue": 0.014000001,
+        "stress": 0.0109338565,
+        "health": 0.99995637
+      }
+    },
+    {
+      "tick": 8,
+      "observation": {
+        "tick": 8,
+        "source": "World",
+        "value": "Sound"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 8,
+        "energy": 0.98000014,
+        "curiosity": 1.05,
+        "uncertainty": 1.0699999,
+        "fatigue": 0.016,
+        "stress": 0.012530186,
+        "health": 0.99994385
+      }
+    },
+    {
+      "tick": 9,
+      "observation": {
+        "tick": 9,
+        "source": "World",
+        "value": "Movement"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 9,
+        "energy": 0.9770002,
+        "curiosity": 1.0999999,
+        "uncertainty": 1.0699999,
+        "fatigue": 0.018000001,
+        "stress": 0.014151535,
+        "health": 0.9999297
+      }
+    },
+    {
+      "tick": 10,
+      "observation": {
+        "tick": 10,
+        "source": "World",
+        "value": "Temperature"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 10,
+        "energy": 0.9660002,
+        "curiosity": 1.0999999,
+        "uncertainty": 1.0699999,
+        "fatigue": 0.020000001,
+        "stress": 0.015788777,
+        "health": 0.99991393
+      }
+    },
+    {
+      "tick": 11,
+      "observation": {
+        "tick": 11,
+        "source": "World",
+        "value": "Silence"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 11,
+        "energy": 0.9650002,
+        "curiosity": 1.0999999,
+        "uncertainty": 1.05,
+        "fatigue": 0.022000002,
+        "stress": 0.017401831,
+        "health": 0.9998965
+      }
+    },
+    {
+      "tick": 12,
+      "observation": {
+        "tick": 12,
+        "source": "World",
+        "value": "Light"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 12,
+        "energy": 0.9640002,
+        "curiosity": 1.1199999,
+        "uncertainty": 1.04,
+        "fatigue": 0.024000002,
+        "stress": 0.019010821,
+        "health": 0.9998775
+      }
+    },
+    {
+      "tick": 13,
+      "observation": {
+        "tick": 13,
+        "source": "World",
+        "value": "Dark"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 13,
+        "energy": 0.96300024,
+        "curiosity": 1.1099999,
+        "uncertainty": 1.0699999,
+        "fatigue": 0.026000002,
+        "stress": 0.020640766,
+        "health": 0.9998569
+      }
+    },
+    {
+      "tick": 14,
+      "observation": {
+        "tick": 14,
+        "source": "World",
+        "value": "Sound"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 14,
+        "energy": 0.96200025,
+        "curiosity": 1.1099999,
+        "uncertainty": 1.0899999,
+        "fatigue": 0.028000003,
+        "stress": 0.02228656,
+        "health": 0.9998346
+      }
+    },
+    {
+      "tick": 15,
+      "observation": {
+        "tick": 15,
+        "source": "World",
+        "value": "Movement"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 15,
+        "energy": 0.9590003,
+        "curiosity": 1.1599998,
+        "uncertainty": 1.0899999,
+        "fatigue": 0.030000003,
+        "stress": 0.023957126,
+        "health": 0.99981064
+      }
+    },
+    {
+      "tick": 16,
+      "observation": {
+        "tick": 16,
+        "source": "World",
+        "value": "Temperature"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 16,
+        "energy": 0.9480003,
+        "curiosity": 1.1599998,
+        "uncertainty": 1.0899999,
+        "fatigue": 0.032,
+        "stress": 0.02564334,
+        "health": 0.999785
+      }
+    },
+    {
+      "tick": 17,
+      "observation": {
+        "tick": 17,
+        "source": "World",
+        "value": "Silence"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 17,
+        "energy": 0.9470003,
+        "curiosity": 1.1599998,
+        "uncertainty": 1.0699999,
+        "fatigue": 0.034,
+        "stress": 0.027305122,
+        "health": 0.9997577
+      }
+    },
+    {
+      "tick": 18,
+      "observation": {
+        "tick": 18,
+        "source": "World",
+        "value": "Light"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 18,
+        "energy": 0.94600034,
+        "curiosity": 1.1799998,
+        "uncertainty": 1.06,
+        "fatigue": 0.036000002,
+        "stress": 0.028962595,
+        "health": 0.99972874
+      }
+    },
+    {
+      "tick": 19,
+      "observation": {
+        "tick": 19,
+        "source": "World",
+        "value": "Dark"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 19,
+        "energy": 0.94500035,
+        "curiosity": 1.1699998,
+        "uncertainty": 1.0899999,
+        "fatigue": 0.038000003,
+        "stress": 0.030640779,
+        "health": 0.9996981
+      }
+    },
+    {
+      "tick": 20,
+      "observation": {
+        "tick": 20,
+        "source": "World",
+        "value": "Sound"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 20,
+        "energy": 0.94400036,
+        "curiosity": 1.1699998,
+        "uncertainty": 1.1099999,
+        "fatigue": 0.040000003,
+        "stress": 0.032334574,
+        "health": 0.9996658
+      }
+    },
+    {
+      "tick": 21,
+      "observation": {
+        "tick": 21,
+        "source": "World",
+        "value": "Movement"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 21,
+        "energy": 0.9410004,
+        "curiosity": 1.2199998,
+        "uncertainty": 1.1099999,
+        "fatigue": 0.042000003,
+        "stress": 0.034052897,
+        "health": 0.99963176
+      }
+    },
+    {
+      "tick": 22,
+      "observation": {
+        "tick": 22,
+        "source": "World",
+        "value": "Temperature"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 22,
+        "energy": 0.9300004,
+        "curiosity": 1.2199998,
+        "uncertainty": 1.1099999,
+        "fatigue": 0.044000003,
+        "stress": 0.035786632,
+        "health": 0.999596
+      }
+    },
+    {
+      "tick": 23,
+      "observation": {
+        "tick": 23,
+        "source": "World",
+        "value": "Silence"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 23,
+        "energy": 0.92900044,
+        "curiosity": 1.2199998,
+        "uncertainty": 1.0899999,
+        "fatigue": 0.046000004,
+        "stress": 0.037495703,
+        "health": 0.9995585
+      }
+    },
+    {
+      "tick": 24,
+      "observation": {
+        "tick": 24,
+        "source": "World",
+        "value": "Light"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 24,
+        "energy": 0.92800045,
+        "curiosity": 1.2399998,
+        "uncertainty": 1.0799999,
+        "fatigue": 0.048000004,
+        "stress": 0.03920022,
+        "health": 0.9995193
+      }
+    },
+    {
+      "tick": 25,
+      "observation": {
+        "tick": 25,
+        "source": "World",
+        "value": "Dark"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 25,
+        "energy": 0.92700046,
+        "curiosity": 1.2299998,
+        "uncertainty": 1.1099999,
+        "fatigue": 0.050000004,
+        "stress": 0.040925216,
+        "health": 0.99947834
+      }
+    },
+    {
+      "tick": 26,
+      "observation": {
+        "tick": 26,
+        "source": "World",
+        "value": "Sound"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 26,
+        "energy": 0.9260005,
+        "curiosity": 1.2299998,
+        "uncertainty": 1.1299999,
+        "fatigue": 0.052000005,
+        "stress": 0.04266559,
+        "health": 0.99943566
+      }
+    },
+    {
+      "tick": 27,
+      "observation": {
+        "tick": 27,
+        "source": "World",
+        "value": "Movement"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 27,
+        "energy": 0.9230005,
+        "curiosity": 1.2799997,
+        "uncertainty": 1.1299999,
+        "fatigue": 0.054000005,
+        "stress": 0.044430263,
+        "health": 0.99939126
+      }
+    },
+    {
+      "tick": 28,
+      "observation": {
+        "tick": 28,
+        "source": "World",
+        "value": "Temperature"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 28,
+        "energy": 0.91200054,
+        "curiosity": 1.2799997,
+        "uncertainty": 1.1299999,
+        "fatigue": 0.056000005,
+        "stress": 0.04621011,
+        "health": 0.99934506
+      }
+    },
+    {
+      "tick": 29,
+      "observation": {
+        "tick": 29,
+        "source": "World",
+        "value": "Silence"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 29,
+        "energy": 0.91100055,
+        "curiosity": 1.2799997,
+        "uncertainty": 1.1099999,
+        "fatigue": 0.058000006,
+        "stress": 0.047965057,
+        "health": 0.9992971
+      }
+    },
+    {
+      "tick": 30,
+      "observation": {
+        "tick": 30,
+        "source": "World",
+        "value": "Light"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 30,
+        "energy": 0.91000056,
+        "curiosity": 1.2999997,
+        "uncertainty": 1.0999999,
+        "fatigue": 0.060000006,
+        "stress": 0.04971523,
+        "health": 0.9992474
+      }
+    },
+    {
+      "tick": 31,
+      "observation": {
+        "tick": 31,
+        "source": "World",
+        "value": "Dark"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 31,
+        "energy": 0.9090006,
+        "curiosity": 1.2899997,
+        "uncertainty": 1.1299999,
+        "fatigue": 0.062000006,
+        "stress": 0.05148565,
+        "health": 0.9991959
+      }
+    },
+    {
+      "tick": 32,
+      "observation": {
+        "tick": 32,
+        "source": "World",
+        "value": "Sound"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 32,
+        "energy": 0.9080006,
+        "curiosity": 1.2899997,
+        "uncertainty": 1.1499999,
+        "fatigue": 0.064,
+        "stress": 0.053271223,
+        "health": 0.9991426
+      }
+    },
+    {
+      "tick": 33,
+      "observation": {
+        "tick": 33,
+        "source": "World",
+        "value": "Movement"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 33,
+        "energy": 0.9050006,
+        "curiosity": 1.3399997,
+        "uncertainty": 1.1499999,
+        "fatigue": 0.066,
+        "stress": 0.05508087,
+        "health": 0.9990875
+      }
+    },
+    {
+      "tick": 34,
+      "observation": {
+        "tick": 34,
+        "source": "World",
+        "value": "Temperature"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 34,
+        "energy": 0.89400065,
+        "curiosity": 1.3399997,
+        "uncertainty": 1.1499999,
+        "fatigue": 0.067999996,
+        "stress": 0.056905467,
+        "health": 0.9990306
+      }
+    },
+    {
+      "tick": 35,
+      "observation": {
+        "tick": 35,
+        "source": "World",
+        "value": "Silence"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 35,
+        "energy": 0.89300066,
+        "curiosity": 1.3399997,
+        "uncertainty": 1.1299999,
+        "fatigue": 0.06999999,
+        "stress": 0.05870494,
+        "health": 0.9989719
+      }
+    },
+    {
+      "tick": 36,
+      "observation": {
+        "tick": 36,
+        "source": "World",
+        "value": "Light"
+      },
+      "state": {
+        "alive": true,
+        "age_ticks": 36,
+        "energy": 0.8920007,
+        "curiosity": 1.3599997,
+        "uncertainty": 1.1199999,
+        "fatigue": 0.07199999,
+        "stress": 0.060499415,
+        "health": 0.9989114
+      }
+    }
+  ]
+}
