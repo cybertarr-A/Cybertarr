@@ -23,8 +23,6 @@ impl Brain {
             world: World::new(),
             memory: Memory::new(64),
             logger: Logger::new(),
-
-            // Initialize the attention engine
             attention: AttentionEngine::new(
                 AttentionConfig::default(),
             ),
@@ -32,24 +30,40 @@ impl Brain {
     }
 
     pub fn tick(&mut self) {
-        // Advance the organism
+        // Advance organism
         heartbeat(&mut self.state);
 
-        // Observe the environment
+        // Observe environment
         let observation = self.world.observe();
 
-        // ----------------------------------------------------
-        // Temporary attention evaluation.
-        // These values are placeholders and will later be
-        // computed from the Observation.
-        // ----------------------------------------------------
-        let attention_result = self.attention.process(
-            0.8, // novelty
-            0.6, // importance
-            0.5, // urgency
+        // Update physiology first
+        Physiology::process(
+            &mut self.state,
+            &observation,
         );
 
-        // Store only observations that passed attention.
+        // Maintain homeostasis
+        Homeostasis::regulate(
+            &mut self.state,
+        );
+
+        // ----------------------------------------------------
+        // TEMPORARY
+        //
+        // These values are placeholders until the
+        // Attention Analyzer is implemented.
+        // ----------------------------------------------------
+        let novelty = 0.8;
+        let importance = 0.6;
+        let urgency = 0.5;
+
+        let attention_result = self.attention.process(
+            novelty,
+            importance,
+            urgency,
+        );
+
+        // Store only accepted observations
         if attention_result.accepted {
             let _ = self.memory.observe(
                 observation.value.clone(),
@@ -57,25 +71,17 @@ impl Brain {
             );
         }
 
-        // Physiological response
-        Physiology::process(
-            &mut self.state,
-            &observation,
-        );
-
-        // Maintain internal stability
-        Homeostasis::regulate(
-            &mut self.state,
-        );
-
-        // Log the tick
+        // Log current tick
         self.logger.record(
             &observation,
             &attention_result,
             &self.state,
         );
 
-        self.logger.save();
+        // Save periodically instead of every tick
+        if self.state.age_ticks % 100 == 0 {
+            self.logger.save();
+        }
 
         let stats = self.memory.statistics();
 

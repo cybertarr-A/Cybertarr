@@ -87,3 +87,10 @@ impl AttentionEngine {
         )
     }
 }
+
+#[derive(Debug, Clone)]
+pub struct AttentionMetrics {
+    pub novelty: f32,
+    pub importance: f32,
+    pub urgency: f32,
+}
