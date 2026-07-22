@@ -1,42 +1,57 @@
 //! # Attention
 //!
-//! A lightweight cognitive attention engine.
-//!
-//! The engine evaluates normalized attention metrics and determines
-//! whether a stimulus deserves further processing.
+//! A lightweight biologically-inspired attention system.
 //!
 //! ## Pipeline
 //!
 //! ```text
-//! AttentionInput
+//! Observation
 //!        │
 //!        ▼
-//! Validation
+//! Novelty Analysis
 //!        │
-//!        ▼
-//! Weighted Score
-//!        │
-//!        ▼
-//! Priority Mapping
-//!        │
-//!        ▼
-//! Acceptance Filter
-//!        │
-//!        ▼
-//! AttentionResult
+//!        ├────────────┐
+//!        ▼            │
+//! Importance Analysis │
+//!        ▼            │
+//! Urgency Analysis    │
+//!        └────────────┘
+//!              │
+//!              ▼
+//!       AttentionInput
+//!              │
+//!              ▼
+//!         Validation
+//!              │
+//!              ▼
+//!       Weighted Score
+//!              │
+//!              ▼
+//!      Priority Mapping
+//!              │
+//!              ▼
+//!      Acceptance Filter
+//!              │
+//!              ▼
+//!      AttentionResult
 //! ```
 //!
-//! This crate is intentionally independent of any application-specific
-//! types such as observations, memories, or world models.
+//! This crate provides both the attention analysis layer and the
+//! attention evaluation engine.
 
+mod analyzer;
 mod attention;
 mod error;
 mod filter;
+mod importance;
+mod novelty;
 mod priority;
 mod score;
 mod types;
+mod urgency;
 mod validation;
 
+pub use analyzer::AttentionAnalyzer;
 pub use attention::AttentionEngine;
 pub use error::AttentionError;
 pub use types::{

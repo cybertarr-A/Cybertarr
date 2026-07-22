@@ -1,4 +1,4 @@
-use crate::observation::Observation;
+use state::Observation;
 
 pub struct World {
     tick: u64,

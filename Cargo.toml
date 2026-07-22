@@ -5,4 +5,5 @@ members = [
     "apps/embryo",
     "crates/memory",
     "crates/attention",
+    "crates/state",
 ]

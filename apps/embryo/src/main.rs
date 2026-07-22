@@ -1,7 +1,5 @@
 mod brain;
 mod heartbeat;
-mod observation;
-mod state;
 mod world;
 mod physiology;
 mod homeostasis;

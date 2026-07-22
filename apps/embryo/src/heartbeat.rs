@@ -1,4 +1,4 @@
-use crate::state::InternalState;
+use state::InternalState;
 
 pub fn heartbeat(state: &mut InternalState) {
     state.age_ticks += 1;

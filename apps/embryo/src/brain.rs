@@ -2,15 +2,16 @@ use crate::heartbeat::heartbeat;
 use crate::homeostasis::Homeostasis;
 use crate::logger::Logger;
 use crate::physiology::Physiology;
-use crate::state::InternalState;
 use crate::world::World;
 
 use attention::{
+    AttentionAnalyzer,
     AttentionConfig,
     AttentionEngine,
-    AttentionInput,
 };
+
 use memory::Memory;
+use state::InternalState;
 
 pub struct Brain {
     pub state: InternalState,
@@ -51,18 +52,14 @@ impl Brain {
             &mut self.state,
         );
 
-        // ------------------------------------------------------------------
-        // Temporary attention input.
-        //
-        // This will later be replaced by a Perception/Analyzer module.
-        // ------------------------------------------------------------------
-
-        let input = AttentionInput::new(
-            0.8, // novelty
-            0.6, // importance
-            0.5, // urgency
+        // Analyze observation and generate attention metrics
+        let input = AttentionAnalyzer::analyze(
+            &observation,
+            &self.memory,
+            &self.state,
         );
 
+        // Evaluate attention
         let attention_result = self
             .attention
             .evaluate(input)
@@ -76,19 +73,21 @@ impl Brain {
             );
         }
 
+        // Get memory statistics
+        let stats = self.memory.statistics();
+
         // Record experiment
         self.logger.record(
             &observation,
             &attention_result,
             &self.state,
+            stats.clone(),
         );
 
         // Save every 100 ticks
         if self.state.age_ticks % 100 == 0 {
             self.logger.save();
         }
-
-        let stats = self.memory.statistics();
 
         println!("\n==============================");
         println!("Heartbeat {}", self.state.age_ticks);
@@ -128,6 +127,10 @@ impl Brain {
             self.logger.save();
 
             println!("Experiment saved.");
+            println!(
+                "Experiment directory: {:?}",
+                self.logger.experiment_directory()
+            );
 
             std::process::exit(0);
         }

@@ -1,25 +1,31 @@
 use attention::AttentionResult;
 use chrono::Local;
+use memory::MemoryStatistics;
 use serde::{Deserialize, Serialize};
+use state::{InternalState, Observation};
 
 use std::fs::{create_dir_all, File};
 use std::io::Write;
 use std::path::PathBuf;
 
-use crate::observation::Observation;
-use crate::state::InternalState;
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TickRecord {
     pub tick: u64,
+    pub timestamp: String,
+
     pub observation: Observation,
+
     pub attention: AttentionResult,
+
     pub state: InternalState,
+
+    pub memory: MemoryStatistics,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RunLog {
     pub run_id: String,
+
     pub started_at: String,
     pub ended_at: String,
 
@@ -35,6 +41,7 @@ pub struct RunLog {
 
 pub struct Logger {
     log: RunLog,
+    output_directory: PathBuf,
     output_file: PathBuf,
 }
 
@@ -42,33 +49,34 @@ impl Logger {
     pub fn new() -> Self {
         let now = Local::now();
 
-        let date = now.format("%Y-%m-%d").to_string();
+        let run_id = now.format("%Y%m%d_%H%M%S").to_string();
 
-        let filename = now
-            .format("experiment_%Y-%m-%d_%H-%M-%S.json")
-            .to_string();
+        let output_directory =
+            PathBuf::from(format!("experiments/run_{}", run_id));
 
-        let directory = PathBuf::from(format!(
-            "experiments/{}",
-            date
-        ));
+        create_dir_all(&output_directory)
+            .expect("Failed to create experiment directory");
 
-        create_dir_all(&directory)
-            .expect("Failed to create experiments directory");
-
-        let output_file = directory.join(filename);
+        let output_file = output_directory.join("experiment.json");
 
         Self {
             log: RunLog {
-                run_id: now.format("%Y%m%d%H%M%S").to_string(),
+                run_id: run_id.clone(),
+
                 started_at: now.to_rfc3339(),
                 ended_at: String::new(),
+
                 version: "0.0.1-alpha".into(),
+
                 total_ticks: 0,
                 survived: true,
+
                 final_state: InternalState::default(),
+
                 ticks: Vec::new(),
             },
+
+            output_directory,
             output_file,
         }
     }
@@ -78,6 +86,7 @@ impl Logger {
         observation: &Observation,
         attention: &AttentionResult,
         state: &InternalState,
+        memory: MemoryStatistics,
     ) {
         self.log.total_ticks = state.age_ticks;
         self.log.survived = state.alive;
@@ -85,9 +94,16 @@ impl Logger {
 
         self.log.ticks.push(TickRecord {
             tick: state.age_ticks,
+
+            timestamp: Local::now().to_rfc3339(),
+
             observation: observation.clone(),
+
             attention: *attention,
+
             state: state.clone(),
+
+            memory,
         });
     }
 
@@ -108,7 +124,11 @@ impl Logger {
         *self = Logger::new();
     }
 
-    pub fn path(&self) -> &PathBuf {
+    pub fn experiment_directory(&self) -> &PathBuf {
+        &self.output_directory
+    }
+
+    pub fn experiment_file(&self) -> &PathBuf {
         &self.output_file
     }
 }

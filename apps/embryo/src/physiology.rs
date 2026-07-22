@@ -1,5 +1,5 @@
-use crate::observation::Observation;
-use crate::state::InternalState;
+use state::Observation;
+use state::InternalState;
 
 pub struct Physiology;
 

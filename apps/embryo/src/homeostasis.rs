@@ -1,4 +1,4 @@
-use crate::state::InternalState;
+use state::InternalState;
 
 pub struct Homeostasis;
 
