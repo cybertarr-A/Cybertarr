@@ -9,6 +9,10 @@ use brain::Brain;
 use std::{thread, time::Duration};
 
 fn main() {
+    println!(
+    "Current directory: {:?}",
+    std::env::current_dir().unwrap()
+    );
     println!("=================================");
     println!("Cybertarr");
     println!("Digital Embryo");

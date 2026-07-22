@@ -1,10 +1,11 @@
 use crate::storage::MemoryStorage;
+use serde::{Deserialize, Serialize};
 
 /// Derived statistics for the Memory subsystem.
 ///
 /// These values are calculated from the current memory storage
 /// and are not persisted.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MemoryStatistics {
     /// Total number of unique memories.
     pub total_memories: usize,
@@ -63,22 +64,18 @@ impl MemoryStatistics {
 
             if record.times_seen > most_seen_count {
                 most_seen_count = record.times_seen;
-                most_seen_observation =
-                    Some(record.observation.clone());
+                most_seen_observation = Some(record.observation.clone());
             }
         }
 
         Self {
             total_memories,
 
-            average_novelty:
-                novelty_sum / total_memories as f32,
+            average_novelty: novelty_sum / total_memories as f32,
 
-            average_importance:
-                importance_sum / total_memories as f32,
+            average_importance: importance_sum / total_memories as f32,
 
-            average_confidence:
-                confidence_sum / total_memories as f32,
+            average_confidence: confidence_sum / total_memories as f32,
 
             total_observations,
 

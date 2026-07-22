@@ -49,19 +49,26 @@ impl Logger {
     pub fn new() -> Self {
         let now = Local::now();
 
-        let run_id = now.format("%Y%m%d_%H%M%S").to_string();
+        // Folder name (YYYY-MM-DD)
+        let date = now.format("%Y-%m-%d").to_string();
 
+        // File name
+        let filename = now
+            .format("experiment_%Y-%m-%d_%H-%M-%S.json")
+            .to_string();
+
+        // experiments/YYYY-MM-DD/
         let output_directory =
-            PathBuf::from(format!("experiments/run_{}", run_id));
+            PathBuf::from(format!("experiments/{}", date));
 
         create_dir_all(&output_directory)
-            .expect("Failed to create experiment directory");
+            .expect("Failed to create experiments directory");
 
-        let output_file = output_directory.join("experiment.json");
+        let output_file = output_directory.join(filename);
 
         Self {
             log: RunLog {
-                run_id: run_id.clone(),
+                run_id: now.format("%Y%m%d%H%M%S").to_string(),
 
                 started_at: now.to_rfc3339(),
                 ended_at: String::new(),
@@ -107,19 +114,24 @@ impl Logger {
         });
     }
 
-    pub fn save(&mut self) {
-        self.log.ended_at = Local::now().to_rfc3339();
+pub fn save(&mut self) {
+    self.log.ended_at = Local::now().to_rfc3339();
 
-        let json = serde_json::to_string_pretty(&self.log)
-            .expect("Failed to serialize experiment");
+    let json = serde_json::to_string_pretty(&self.log)
+        .expect("Failed to serialize experiment");
 
-        let mut file = File::create(&self.output_file)
-            .expect("Failed to create experiment file");
+    println!("Saving experiment to: {:?}", self.output_file);
 
-        file.write_all(json.as_bytes())
-            .expect("Failed to write experiment");
-    }
+    let mut file = File::create(&self.output_file)
+        .expect("Failed to create experiment file");
 
+    file.write_all(json.as_bytes())
+        .expect("Failed to write experiment");
+
+    println!("Experiment saved successfully.");
+}
+
+    #[allow(dead_code)]
     pub fn reset(&mut self) {
         *self = Logger::new();
     }

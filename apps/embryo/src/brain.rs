@@ -85,9 +85,7 @@ impl Brain {
         );
 
         // Save every 100 ticks
-        if self.state.age_ticks % 100 == 0 {
-            self.logger.save();
-        }
+        self.logger.save();
 
         println!("\n==============================");
         println!("Heartbeat {}", self.state.age_ticks);
