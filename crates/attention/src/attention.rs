@@ -1,96 +1,141 @@
+//! Attention Engine.
+//
+//! This module orchestrates the complete attention pipeline.
+
 use crate::{
+    error::AttentionError,
     filter::accept,
     priority::determine_priority,
     score::calculate_score,
-    types::{AttentionConfig, AttentionResult},
+    types::{
+        AttentionConfig,
+        AttentionInput,
+        AttentionResult,
+    },
+    validation::Validator,
 };
 
 /// Cognitive attention engine.
 ///
-/// Responsible for evaluating whether an observation deserves
-/// further processing based on weighted attention factors.
+/// The engine evaluates normalized attention metrics and
+/// determines whether an observation deserves attention.
 #[derive(Debug, Clone)]
 pub struct AttentionEngine {
     config: AttentionConfig,
 }
 
 impl AttentionEngine {
-    /// Creates a new attention engine.
+    /// Create a new attention engine.
     pub fn new(config: AttentionConfig) -> Self {
         Self { config }
     }
 
-    /// Returns the current engine configuration.
+    /// Immutable access to the current configuration.
     pub fn config(&self) -> &AttentionConfig {
         &self.config
     }
 
-    /// Replaces the engine configuration.
-    pub fn set_config(&mut self, config: AttentionConfig) {
+    /// Replace the engine configuration.
+    pub fn set_config(
+        &mut self,
+        config: AttentionConfig,
+    ) -> Result<(), AttentionError> {
+        Validator::validate_config(&config)?;
         self.config = config;
+        Ok(())
     }
 
-    /// Evaluate an observation.
-    ///
-    /// All values must be normalized between `0.0` and `1.0`.
-    pub fn process(
+    /// Evaluate an attention input.
+    pub fn evaluate(
         &self,
-        novelty: f32,
-        importance: f32,
-        urgency: f32,
-    ) -> AttentionResult {
-        let score = self.calculate_score(
-            novelty,
-            importance,
-            urgency,
+        input: AttentionInput,
+    ) -> Result<AttentionResult, AttentionError> {
+        // Validate everything first.
+        Validator::validate_config(&self.config)?;
+        Validator::validate_input(&input)?;
+
+        // Calculate weighted score.
+        let score = calculate_score(
+            &input,
+            &self.config,
         );
 
-        let priority = self.assign_priority(score);
+        // Determine cognitive priority.
+        let priority = determine_priority(score);
 
-        let accepted = self.should_accept(score);
-
-        AttentionResult::new(
-            score,
-            priority,
-            accepted,
-        )
-    }
-
-    /// Calculates the weighted attention score.
-    fn calculate_score(
-        &self,
-        novelty: f32,
-        importance: f32,
-        urgency: f32,
-    ) -> f32 {
-        calculate_score(
-            novelty,
-            importance,
-            urgency,
-            self.config.novelty_weight,
-            self.config.importance_weight,
-            self.config.urgency_weight,
-        )
-    }
-
-    /// Maps a score to a priority.
-    fn assign_priority(&self, score: f32) -> crate::types::Priority {
-        determine_priority(score)
-    }
-
-    /// Determines whether the observation should continue
-    /// through the cognitive pipeline.
-    fn should_accept(&self, score: f32) -> bool {
-        accept(
+        // Decide whether the stimulus is accepted.
+        let accepted = accept(
             score,
             self.config.acceptance_threshold,
+        );
+
+        Ok(
+            AttentionResult::new(
+                score,
+                priority,
+                accepted,
+            )
         )
     }
 }
 
-#[derive(Debug, Clone)]
-pub struct AttentionMetrics {
-    pub novelty: f32,
-    pub importance: f32,
-    pub urgency: f32,
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn evaluates_successfully() {
+        let engine = AttentionEngine::new(
+            AttentionConfig::default(),
+        );
+
+        let input = AttentionInput::new(
+            0.8,
+            0.6,
+            0.5,
+        );
+
+        let result = engine.evaluate(input);
+
+        assert!(result.is_ok());
+
+        let result = result.unwrap();
+
+        assert!(result.score >= 0.0);
+        assert!(result.score <= 1.0);
+    }
+
+    #[test]
+    fn rejects_invalid_input() {
+        let engine = AttentionEngine::new(
+            AttentionConfig::default(),
+        );
+
+        let input = AttentionInput::new(
+            1.5,
+            0.5,
+            0.5,
+        );
+
+        assert!(engine.evaluate(input).is_err());
+    }
+
+    #[test]
+    fn accepts_high_attention() {
+        let engine = AttentionEngine::new(
+            AttentionConfig::default(),
+        );
+
+        let input = AttentionInput::new(
+            1.0,
+            1.0,
+            1.0,
+        );
+
+        let result = engine
+            .evaluate(input)
+            .unwrap();
+
+        assert!(result.accepted);
+    }
 }

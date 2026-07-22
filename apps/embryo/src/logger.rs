@@ -1,6 +1,7 @@
 use attention::AttentionResult;
 use chrono::Local;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
+
 use std::fs::{create_dir_all, File};
 use std::io::Write;
 use std::path::PathBuf;
@@ -8,7 +9,7 @@ use std::path::PathBuf;
 use crate::observation::Observation;
 use crate::state::InternalState;
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TickRecord {
     pub tick: u64,
     pub observation: Observation,
@@ -16,20 +17,24 @@ pub struct TickRecord {
     pub state: InternalState,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RunLog {
     pub run_id: String,
     pub started_at: String,
     pub ended_at: String,
+
     pub version: String,
+
     pub total_ticks: u64,
     pub survived: bool,
+
     pub final_state: InternalState,
+
     pub ticks: Vec<TickRecord>,
 }
 
 pub struct Logger {
-    pub log: RunLog,
+    log: RunLog,
     output_file: PathBuf,
 }
 
@@ -38,16 +43,20 @@ impl Logger {
         let now = Local::now();
 
         let date = now.format("%Y-%m-%d").to_string();
-        let timestamp = now
-            .format("experiment_%Y-%m-%d_%H-%M-%S")
+
+        let filename = now
+            .format("experiment_%Y-%m-%d_%H-%M-%S.json")
             .to_string();
 
-        let directory = format!("experiments/{}", date);
+        let directory = PathBuf::from(format!(
+            "experiments/{}",
+            date
+        ));
 
-        create_dir_all(&directory).unwrap();
+        create_dir_all(&directory)
+            .expect("Failed to create experiments directory");
 
-        let output_file =
-            PathBuf::from(format!("{}/{}.json", directory, timestamp));
+        let output_file = directory.join(filename);
 
         Self {
             log: RunLog {
@@ -77,7 +86,7 @@ impl Logger {
         self.log.ticks.push(TickRecord {
             tick: state.age_ticks,
             observation: observation.clone(),
-            attention: attention.clone(),
+            attention: *attention,
             state: state.clone(),
         });
     }
@@ -85,12 +94,21 @@ impl Logger {
     pub fn save(&mut self) {
         self.log.ended_at = Local::now().to_rfc3339();
 
-        let json =
-            serde_json::to_string_pretty(&self.log).unwrap();
+        let json = serde_json::to_string_pretty(&self.log)
+            .expect("Failed to serialize experiment");
 
-        let mut file =
-            File::create(&self.output_file).unwrap();
+        let mut file = File::create(&self.output_file)
+            .expect("Failed to create experiment file");
 
-        file.write_all(json.as_bytes()).unwrap();
+        file.write_all(json.as_bytes())
+            .expect("Failed to write experiment");
+    }
+
+    pub fn reset(&mut self) {
+        *self = Logger::new();
+    }
+
+    pub fn path(&self) -> &PathBuf {
+        &self.output_file
     }
 }

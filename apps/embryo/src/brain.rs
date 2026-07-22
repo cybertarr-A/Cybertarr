@@ -5,7 +5,11 @@ use crate::physiology::Physiology;
 use crate::state::InternalState;
 use crate::world::World;
 
-use attention::{AttentionConfig, AttentionEngine};
+use attention::{
+    AttentionConfig,
+    AttentionEngine,
+    AttentionInput,
+};
 use memory::Memory;
 
 pub struct Brain {
@@ -36,7 +40,7 @@ impl Brain {
         // Observe environment
         let observation = self.world.observe();
 
-        // Update physiology first
+        // Update physiology
         Physiology::process(
             &mut self.state,
             &observation,
@@ -47,23 +51,24 @@ impl Brain {
             &mut self.state,
         );
 
-        // ----------------------------------------------------
-        // TEMPORARY
+        // ------------------------------------------------------------------
+        // Temporary attention input.
         //
-        // These values are placeholders until the
-        // Attention Analyzer is implemented.
-        // ----------------------------------------------------
-        let novelty = 0.8;
-        let importance = 0.6;
-        let urgency = 0.5;
+        // This will later be replaced by a Perception/Analyzer module.
+        // ------------------------------------------------------------------
 
-        let attention_result = self.attention.process(
-            novelty,
-            importance,
-            urgency,
+        let input = AttentionInput::new(
+            0.8, // novelty
+            0.6, // importance
+            0.5, // urgency
         );
 
-        // Store only accepted observations
+        let attention_result = self
+            .attention
+            .evaluate(input)
+            .expect("Attention evaluation failed");
+
+        // Store accepted observations
         if attention_result.accepted {
             let _ = self.memory.observe(
                 observation.value.clone(),
@@ -71,14 +76,14 @@ impl Brain {
             );
         }
 
-        // Log current tick
+        // Record experiment
         self.logger.record(
             &observation,
             &attention_result,
             &self.state,
         );
 
-        // Save periodically instead of every tick
+        // Save every 100 ticks
         if self.state.age_ticks % 100 == 0 {
             self.logger.save();
         }
@@ -95,9 +100,18 @@ impl Brain {
         println!("{:#?}", attention_result);
 
         println!("\nMemory");
-        println!("Unique Memories   : {}", stats.total_memories);
-        println!("Observations      : {}", stats.total_observations);
-        println!("Average Novelty   : {:.3}", stats.average_novelty);
+        println!(
+            "Unique Memories   : {}",
+            stats.total_memories
+        );
+        println!(
+            "Observations      : {}",
+            stats.total_observations
+        );
+        println!(
+            "Average Novelty   : {:.3}",
+            stats.average_novelty
+        );
         println!(
             "Most Seen         : {:?}",
             stats.most_seen_observation
